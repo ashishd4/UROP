@@ -14,7 +14,7 @@ def kernel(S, arg):
     return 0
 
 def kernel2(xp, arg, u, dx):
-    i = int(xp/dx)
+    i = int(xp)
     
     if (arg == 'c'):
         return u[i]
