@@ -1,10 +1,27 @@
 def Cd_Sternin(Re): # Reynolds number
+    ########## DESCRIPTION ###########################################
+    # This function derives and outputs the drag coefficient of a particle.
+    # The only parameter is the Reynolds number (Re).
+    ##################################################################
+    
     if Re == 0: 
         return 0.42
     else:
         return 24/Re + 4.4/np.sqrt(Re) + 0.42
 
-def Cd_Loth(Re, ug, up, Tg, Tp, D, rhog): # Reynolds num, gas vel, particle vel, gas temp, particle temp, diameter, gas density
+def Cd_Loth(Re, ug, up, Tg, Tp, D, rhog):
+    ########## DESCRIPTION ###########################################
+    # This function derives and outputs the drag coefficient of a particle.
+    # These are the parameters: 
+    # Re   - Reynolds number
+    # ug   - Gas velocity, in m/s
+    # up   - Particle velocity, in m/s
+    # Tg   - Gas temperature, in K
+    # Tp   - Particle temperature, in K
+    # D    - Particle diameter, in m
+    # rhog - Gas density, in kg/m^3
+    ##################################################################
+    
     import math
     import numpy as np
     
@@ -54,6 +71,16 @@ def Cd_Loth(Re, ug, up, Tg, Tp, D, rhog): # Reynolds num, gas vel, particle vel,
     return (C_dKnRe + Ma**4*C_dfmRe)/(1 + Ma**4)
 
 def kernel(S, arg):
+    ########## DESCRIPTION ###########################################
+    # This kernel function derives and outputs the gas velocity distribution in a small region.
+    # These are the parameters: 
+    # S   - velocity of gas at a specific point
+    # arg - argument for what to return
+    #       c - return S
+    #       p - return a numpy array that distributes the value of S as a 25-50-25 distribution
+    #       anything else - return 0
+    ##################################################################
+    
     import numpy as np
     
     if (arg == 'c'):
@@ -63,7 +90,19 @@ def kernel(S, arg):
     return 0
 
 def kernel2(xp, arg, u, dx):
-    i = int(xp)
+    ########## DESCRIPTION ###########################################
+    # This kernel function derives and outputs the gas velocity distribution in a small region.
+    # These are the parameters: 
+    # xp  - particle position
+    # arg - argument for what to return
+    #       c - return S
+    #       p - return the sum of gas velocities around the particle as implemented below
+    #       anything else - return 0
+    # u   - array of gas velocities
+    # dx  - change in distance
+    ##################################################################
+    
+    i = int(xp/dx)
     
     if (arg == 'c'):
         return u[i]
